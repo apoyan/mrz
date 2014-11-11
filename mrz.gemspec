@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Mrz::VERSION
   spec.authors       = ["Kristijonas Urbaitis"]
   spec.email         = ["kristijonas.urbaitis@gmail.com"]
-  spec.summary       = %q{TODO: Generates MRZ.}
+  spec.summary       = %q{Generates MRZ.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
