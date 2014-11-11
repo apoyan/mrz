@@ -1,12 +1,15 @@
 module Mrz
   class Builder
 
+    PASSPORT_CODE = 'P'
+    SEPARATOR = '<'
+
     attr_accessor :type, :country, :first_name, :last_name, :passport_number, :nationality,
                   :date_of_birth, :sex, :expiration_date, :personal_number, :code
 
     def initialize(params)
-      @code = 'P'
-      @type = '<'
+      @code = PASSPORT_CODE
+      @type = SEPARATOR
       @country = params[:country]
       @first_name = params[:first_name]
       @last_name = params[:last_name]
@@ -80,7 +83,7 @@ module Mrz
     end
 
     def concat_name
-      name = remove_empty_chars(last_name + '<<' + first_name).upcase
+      name = remove_empty_chars(last_name + SEPARATOR * 2 + first_name).upcase
       name = Encoder.new(name).convert
       concat(pad_out(name, 39))
     end
@@ -88,13 +91,13 @@ module Mrz
     def pad_out(str, length)
       str = str[0..length-1]
       while str.length < length
-        str += '<'
+        str += SEPARATOR
       end
       str
     end
 
     def remove_empty_chars(str)
-      str.gsub(' ', '<')
+      str.gsub(' ', SEPARATOR)
     end
 
     def concat_country
