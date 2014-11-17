@@ -2,14 +2,24 @@ module Mrz
   class Builder
 
     PASSPORT_CODE = 'P'
-    SEPARATOR = '<'
+    FIRST_LINE_START = 0
+    FIRST_LINE_END = 43
+    SECOND_LINE_START = 44
+    SECOND_LINE_END = 87
+
+    CD_START1 = 44
+    CD_START2 = 57
+    CD_START3 = 65
+    CD_END1 = 53
+    CD_END2 = 63
+    CD_END3 = 86
 
     attr_accessor :type, :country, :first_name, :last_name, :passport_number, :nationality,
                   :date_of_birth, :sex, :expiration_date, :personal_number, :code
 
     def initialize(params)
       @code = PASSPORT_CODE
-      @type = SEPARATOR
+      @type = Formatters::Base::SEPARATOR
       @country = params[:country]
       @first_name = params[:first_name]
       @last_name = params[:last_name]
@@ -33,13 +43,17 @@ module Mrz
       concat_check_digit(concat_personal_number)
       concat_final_check_digit
 
-      [code[0..43], code[44..87]]
+      [code[FIRST_LINE_START..FIRST_LINE_END], code[SECOND_LINE_START..SECOND_LINE_END]]
     end
 
     private
 
     def concat_final_check_digit
-      concat(calculate_check_digit(code[44..53] + code[57..63] + code[65..86]))
+      concat(
+        calculate_check_digit(
+          code[CD_START1..CD_END1] + code[CD_START2..CD_END2] + code[CD_START3..CD_END3]
+        )
+      )
     end
 
     def calculate_check_digit(str)
@@ -47,11 +61,11 @@ module Mrz
     end
 
     def concat_personal_number
-      concat(pad_out(personal_number.upcase, 14))
+      concat(Formatters::PersonalNumber.new(personal_number).format)
     end
 
     def concat_expiration_date
-      concat(format_date(expiration_date))
+      concat(Formatters::Date.new(expiration_date).format)
     end
 
     def concat_sex
@@ -59,15 +73,7 @@ module Mrz
     end
 
     def concat_date_of_birth
-      concat(format_date(date_of_birth))
-    end
-
-    def format_date(date)
-      year = date.year.to_s[2..3]
-      month = "%02d" % date.month
-      day = "%02d" % date.day
-
-      year + month + day
+      concat(Formatters::Date.new(date_of_birth).format)
     end
 
     def concat_nationality
@@ -79,25 +85,11 @@ module Mrz
     end
 
     def concat_passport_number
-      concat(pad_out(passport_number.upcase, 9))
+      concat(Formatters::PassportNumber.new(passport_number).format)
     end
 
     def concat_name
-      name = remove_empty_chars(last_name + SEPARATOR * 2 + first_name).upcase
-      name = Encoder.new(name).convert
-      concat(pad_out(name, 39))
-    end
-
-    def pad_out(str, length)
-      str = str[0..length-1]
-      while str.length < length
-        str += SEPARATOR
-      end
-      str
-    end
-
-    def remove_empty_chars(str)
-      str.gsub(' ', SEPARATOR)
+      concat(Formatters::Name.new(first_name, last_name).format)
     end
 
     def concat_country
@@ -105,7 +97,7 @@ module Mrz
     end
 
     def concat_type
-      concat(type.upcase)
+      concat(type)
     end
 
     def concat(str)
