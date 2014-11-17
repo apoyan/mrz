@@ -2,6 +2,17 @@ module Mrz
   class Builder
 
     PASSPORT_CODE = 'P'
+    FIRST_LINE_START = 0
+    FIRST_LINE_END = 43
+    SECOND_LINE_START = 44
+    SECOND_LINE_END = 87
+
+    CD_START1 = 44
+    CD_START2 = 57
+    CD_START3 = 65
+    CD_END1 = 53
+    CD_END2 = 63
+    CD_END3 = 86
 
     attr_accessor :type, :country, :first_name, :last_name, :passport_number, :nationality,
                   :date_of_birth, :sex, :expiration_date, :personal_number, :code
@@ -32,13 +43,17 @@ module Mrz
       concat_check_digit(concat_personal_number)
       concat_final_check_digit
 
-      [code[0..43], code[44..87]]
+      [code[FIRST_LINE_START..FIRST_LINE_END], code[SECOND_LINE_START..SECOND_LINE_END]]
     end
 
     private
 
     def concat_final_check_digit
-      concat(calculate_check_digit(code[44..53] + code[57..63] + code[65..86]))
+      concat(
+        calculate_check_digit(
+          code[CD_START1..CD_END1] + code[CD_START2..CD_END2] + code[CD_START3..CD_END3]
+        )
+      )
     end
 
     def calculate_check_digit(str)

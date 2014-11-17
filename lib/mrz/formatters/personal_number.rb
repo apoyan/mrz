@@ -2,6 +2,8 @@ module Mrz
   module Formatters
     class PersonalNumber < Base
 
+      PAD_OUT_TO = 14
+
       attr_accessor :personal_number
 
       def initialize(personal_number)
@@ -9,7 +11,7 @@ module Mrz
       end
 
       def format
-        pad_out(personal_number.upcase, 14)
+        pad_out(personal_number.upcase, PAD_OUT_TO)
       end
 
     end
