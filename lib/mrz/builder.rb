@@ -2,14 +2,13 @@ module Mrz
   class Builder
 
     PASSPORT_CODE = 'P'
-    SEPARATOR = '<'
 
     attr_accessor :type, :country, :first_name, :last_name, :passport_number, :nationality,
                   :date_of_birth, :sex, :expiration_date, :personal_number, :code
 
     def initialize(params)
       @code = PASSPORT_CODE
-      @type = SEPARATOR
+      @type = Formatters::Base::SEPARATOR
       @country = params[:country]
       @first_name = params[:first_name]
       @last_name = params[:last_name]
@@ -47,11 +46,11 @@ module Mrz
     end
 
     def concat_personal_number
-      concat(pad_out(personal_number.upcase, 14))
+      concat(Formatters::PersonalNumber.new(personal_number).format)
     end
 
     def concat_expiration_date
-      concat(format_date(expiration_date))
+      concat(Formatters::Date.new(expiration_date).format)
     end
 
     def concat_sex
@@ -59,15 +58,7 @@ module Mrz
     end
 
     def concat_date_of_birth
-      concat(format_date(date_of_birth))
-    end
-
-    def format_date(date)
-      year = date.year.to_s[2..3]
-      month = "%02d" % date.month
-      day = "%02d" % date.day
-
-      year + month + day
+      concat(Formatters::Date.new(date_of_birth).format)
     end
 
     def concat_nationality
@@ -79,25 +70,11 @@ module Mrz
     end
 
     def concat_passport_number
-      concat(pad_out(passport_number.upcase, 9))
+      concat(Formatters::PassportNumber.new(passport_number).format)
     end
 
     def concat_name
-      name = remove_empty_chars(last_name + SEPARATOR * 2 + first_name).upcase
-      name = Encoder.new(name).convert
-      concat(pad_out(name, 39))
-    end
-
-    def pad_out(str, length)
-      str = str[0..length-1]
-      while str.length < length
-        str += SEPARATOR
-      end
-      str
-    end
-
-    def remove_empty_chars(str)
-      str.gsub(' ', SEPARATOR)
+      concat(Formatters::Name.new(first_name, last_name).format)
     end
 
     def concat_country
@@ -105,7 +82,7 @@ module Mrz
     end
 
     def concat_type
-      concat(type.upcase)
+      concat(type)
     end
 
     def concat(str)
