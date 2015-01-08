@@ -12,7 +12,7 @@ describe Mrz::Builder do
         passport_number: 'L898902C',
         nationality: 'UTO',
         date_of_birth: Date.new(1969, 8, 6),
-        sex: 'f',
+        gender: 'f',
         expiration_date: Date.new(1994, 6, 23),
         personal_number: 'ZE184226B'
       }
