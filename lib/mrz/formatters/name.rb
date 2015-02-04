@@ -6,8 +6,8 @@ module Mrz
       
       attr_accessor :first_name, :last_name
 
-      def initialize(first_name, last_name)
-        @first_name = first_name
+      def initialize(first_name, last_name, middle_name = nil)
+        @first_name = general_first_name(first_name, middle_name)
         @last_name = last_name
       end
 
@@ -21,6 +21,11 @@ module Mrz
 
       def remove_empty_chars(str)
         str.gsub(' ', SEPARATOR)
+      end
+
+      def general_first_name(first_name, middle_name)
+        return first_name if middle_name.nil?
+        "#{first_name} #{middle_name}"
       end
 
     end
