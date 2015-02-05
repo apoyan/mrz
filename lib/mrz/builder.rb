@@ -14,7 +14,7 @@ module Mrz
     CD_END2 = 63
     CD_END3 = 86
 
-    attr_accessor :type, :country, :first_name, :last_name, :passport_number, :nationality,
+    attr_accessor :type, :country, :first_name, :middle_name, :last_name, :passport_number, :nationality,
                   :date_of_birth, :gender, :expiration_date, :personal_number, :code
 
     def initialize(params)
@@ -22,6 +22,7 @@ module Mrz
       @type = Formatters::Base::SEPARATOR
       @country = params[:country]
       @first_name = params[:first_name]
+      @middle_name = params[:middle_name]
       @last_name = params[:last_name]
       @passport_number = params[:passport_number]
       @nationality = params[:nationality]
@@ -89,7 +90,7 @@ module Mrz
     end
 
     def concat_name
-      concat(Formatters::Name.new(first_name, last_name).format)
+      concat(Formatters::Name.new(first_name, last_name, middle_name).format)
     end
 
     def concat_country

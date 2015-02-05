@@ -48,6 +48,19 @@ describe Mrz::Builder do
       )
     end
 
+    context 'when middle_name is present' do
+      it 'should generate MRZ' do
+        builder = Mrz::Builder.new(params.merge!(first_name: 'Anna', middle_name: 'Maria'))
+
+        expect(builder.generate).to eq(
+          [
+            'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
+            'L898902C<3UTO6908061F9406236ZE184226B<<<<<14'
+          ]
+        )
+      end
+    end
+
   end
 
 end
