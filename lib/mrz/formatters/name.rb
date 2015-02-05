@@ -24,8 +24,7 @@ module Mrz
       end
 
       def general_first_name(first_name, middle_name)
-        return first_name if middle_name.nil?
-        "#{first_name} #{middle_name}"
+        [first_name, middle_name].compact.join ' '
       end
 
     end
