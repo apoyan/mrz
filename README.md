@@ -1,6 +1,6 @@
-# Mrz
+# MRZ
 
-TODO: Write a gem description
+Generate your passport machine readable zone
 
 ## Installation
 
@@ -20,7 +20,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+params = {
+  type:,
+  country:,
+  first_name:,
+  middle_name:,
+  last_name:, 
+  passport_number:, 
+  nationality:,
+  date_of_birth:, 
+  gender:, 
+  expiration_date:, 
+  personal_number:, 
+  code:
+}
+
+Mrz::Builder.new(params).generate
+```
+
+This method return array of size 2, each entry correspond to a line of the MRZ
 
 ## Contributing
 
