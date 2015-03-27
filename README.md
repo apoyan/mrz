@@ -22,24 +22,24 @@ Or install it yourself as:
 
 ```ruby
 params = {
-  type:,
-  country:,
-  first_name:,
-  middle_name:,
-  last_name:, 
-  passport_number:, 
-  nationality:,
-  date_of_birth:, 
-  gender:, 
-  expiration_date:, 
-  personal_number:, 
-  code:
+  country: '',
+  first_name: 'Anthony',
+  middle_name: 'Vincent',
+  last_name: 'Laibe', 
+  passport_number: 9881234, 
+  nationality: '',
+  date_of_birth: '10/10/1889', 
+  gender: 'm', 
+  expiration_date: '10/12/2025', 
+  personal_number: 1234, 
 }
 
 Mrz::Builder.new(params).generate
 ```
 
-This method return array of size 2, each entry correspond to a line of the MRZ
+For gender the allowed values are 'm' or 'f'
+The personal number is an optional parameter
+This method return an array of size 2, each entry correspond to a line of the MRZ
 
 ## Contributing
 
