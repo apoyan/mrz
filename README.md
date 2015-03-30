@@ -22,16 +22,16 @@ Or install it yourself as:
 
 ```ruby
 params = {
-  country: '',
+  country: 'GBP',
   first_name: 'Anthony',
   middle_name: 'Vincent',
   last_name: 'Laibe', 
-  passport_number: 9881234, 
-  nationality: '',
-  date_of_birth: '10/10/1889', 
+  passport_number: '9881234', 
+  nationality: 'UK',
+  date_of_birth: Date.new(1889, 12, 10), 
   gender: 'm', 
-  expiration_date: '10/12/2025', 
-  personal_number: 1234, 
+  expiration_date: Date.new(2021, 5, 4), 
+  personal_number: '1234', 
 }
 
 Mrz::Builder.new(params).generate
