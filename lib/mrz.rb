@@ -13,7 +13,7 @@ module Mrz
     autoload :Name, 'mrz/formatters/name'
     autoload :PassportNumber, 'mrz/formatters/passport_number'
     autoload :PersonalNumber, 'mrz/formatters/personal_number'
-    
+
   end
 
 end

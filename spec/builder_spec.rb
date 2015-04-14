@@ -6,14 +6,14 @@ describe Mrz::Builder do
 
     let(:params) {
       {
-        country: 'UTO',
-        first_name: 'Anna Maria',
-        last_name: 'Eriksson',
+        country:         'UTO',
+        first_name:      'Anna Maria',
+        last_name:       'Eriksson',
         passport_number: 'L898902C',
-        nationality: 'UTO',
-        date_of_birth: Date.new(1969, 8, 6),
-        gender: 'f',
-        expiration_date: Date.new(1994, 6, 23),
+        nationality:     'UTO',
+        date_of_birth:   Date.new(1969, 8, 6),
+        gender:          'f',
+        expire_on:       Date.new(1994, 6, 23),
         personal_number: 'ZE184226B'
       }
     }

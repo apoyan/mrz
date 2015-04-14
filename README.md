@@ -25,13 +25,13 @@ params = {
   country: 'GBP',
   first_name: 'Anthony',
   middle_name: 'Vincent',
-  last_name: 'Laibe', 
-  passport_number: '9881234', 
+  last_name: 'Laibe',
+  passport_number: '9881234',
   nationality: 'UK',
-  date_of_birth: Date.new(1889, 12, 10), 
-  gender: 'm', 
-  expiration_date: Date.new(2021, 5, 4), 
-  personal_number: '1234', 
+  date_of_birth: Date.new(1889, 12, 10),
+  gender: 'm',
+  expire_on: Date.new(2021, 5, 4),
+  personal_number: '1234',
 }
 
 Mrz::Builder.new(params).generate

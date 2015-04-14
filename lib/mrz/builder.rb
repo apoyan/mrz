@@ -15,7 +15,7 @@ module Mrz
     CD_END3 = 86
 
     attr_accessor :type, :country, :first_name, :middle_name, :last_name, :passport_number, :nationality,
-                  :date_of_birth, :gender, :expiration_date, :personal_number, :code
+                  :date_of_birth, :gender, :expire_on, :personal_number, :code
 
     def initialize(params)
       @code = PASSPORT_CODE
@@ -28,7 +28,7 @@ module Mrz
       @nationality = params[:nationality]
       @date_of_birth = params[:date_of_birth]
       @gender = params[:gender]
-      @expiration_date = params[:expiration_date]
+      @expire_on = params[:expire_on]
       @personal_number = params[:personal_number]
     end
 
@@ -40,7 +40,7 @@ module Mrz
       concat_nationality
       concat_check_digit(concat_date_of_birth)
       concat_gender
-      concat_check_digit(concat_expiration_date)
+      concat_check_digit(concat_expire_on)
       concat_check_digit(concat_personal_number)
       concat_final_check_digit
 
@@ -65,8 +65,8 @@ module Mrz
       concat(Formatters::PersonalNumber.new(personal_number).format)
     end
 
-    def concat_expiration_date
-      concat(Formatters::Date.new(expiration_date).format)
+    def concat_expire_on
+      concat(Formatters::Date.new(expire_on).format)
     end
 
     def concat_gender
