@@ -1,4 +1,11 @@
 require "mrz/version"
+require "mrz/parsers/invalid_format_error"
+require "mrz/parsers/check_digit"
+require "mrz/parsers/result"
+require "mrz/parsers/base_parser"
+require "mrz/parsers/td1_parser"
+require "mrz/parsers/td2_parser"
+require "mrz/parsers/td3_parser"
 
 module Mrz
 
@@ -14,6 +21,31 @@ module Mrz
     autoload :PassportNumber, 'mrz/formatters/passport_number'
     autoload :PersonalNumber, 'mrz/formatters/personal_number'
 
+  end
+
+  def self.parse(mrz_code)
+    case determine_type(mrz_code)
+    when :td1
+      TD1Parser.new(mrz_code).parse
+    when :td2
+      TD2Parser.new(mrz_code).parse
+    when :td3
+      TD3Parser.new(mrz_code).parse
+    end
+  end
+
+  private
+
+  def self.determine_type(code)
+    if code.size == 3
+      :td1
+    elsif code.size == 2 && code.first.size == 36
+      :td2
+    elsif code.size == 2 && code.first.size == 44
+      :td3
+    else
+      raise MRZ::Parsers::InvalidFormatError, "invalid or unsupported mrz code given"
+    end
   end
 
 end
