@@ -3,7 +3,7 @@ module Mrz
     class Name < Base
 
       PAD_OUT_TO = 39
-      
+
       attr_accessor :first_name, :last_name
 
       def initialize(first_name, last_name, middle_name = nil)

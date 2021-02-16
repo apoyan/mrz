@@ -1,19 +1,19 @@
-module MRZ::Parsers
+module Mrz::Parsers
   class TD1Parser < BaseParser
     FORMAT_ONE = /\A(.{2})(.{3})(.{9})(\d)(.{15})\z/
     FORMAT_TWO = /\A(\d{6})(\d)(.)(\d{6})(\d)(.{3})(.{11})(\d)\z/
     FORMAT_THREE = /\A([^<]+)<<(.+)\z/
 
     def initialize(code_ary)
-      @code  = code_ary
-      @one   = code_ary[0]
-      @two   = code_ary[1]
+      @code = code_ary
+      @one = code_ary[0]
+      @two = code_ary[1]
       @three = code_ary[2]
     end
 
     def parse
       if @code.size != 3
-        raise MRZ::InvalidFormatError, "td1 requires 3 mrz lines"
+        raise InvalidFormatError, "td1 requires 3 mrz lines"
       end
 
       line_one_matches = FORMAT_ONE.match(@one)
@@ -21,18 +21,18 @@ module MRZ::Parsers
       line_three_matches = FORMAT_THREE.match(@three)
 
       if line_one_matches.nil?
-        raise MRZ::InvalidFormatError, "td1 first line does not match the required format"
+        raise InvalidFormatError, "td1 first line does not match the required format"
       end
 
       if line_two_matches.nil?
-        raise MRZ::InvalidFormatError, "td1 second line does not match the required format"
+        raise InvalidFormatError, "td1 second line does not match the required format"
       end
 
       if @three.size != 30 || line_three_matches.nil?
-        raise MRZ::InvalidFormatError, "td1 third line does not match the required format"
+        raise InvalidFormatError, "td1 third line does not match the required format"
       end
 
-      MRZ::Result.new(
+      Result.new(
         birth_date: line_two_matches[1],
         birth_date_check_digit: line_two_matches[2],
         composite_check_digit: line_two_matches[8],

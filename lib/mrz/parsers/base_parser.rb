@@ -1,9 +1,10 @@
-class BaseParser::Parsers
-  SPECIAL_CHAR = "<"
-  WHITESPACE = " "
-  EMPTY_SPACE = ""
+module Mrz::Parsers
+  class BaseParser
+    SPECIAL_CHAR = "<"
+    WHITESPACE = " "
+    EMPTY_SPACE = ""
 
-  protected
+    protected
 
     def special_char_to_empty_space(str)
       str.gsub(SPECIAL_CHAR, EMPTY_SPACE)
@@ -12,4 +13,5 @@ class BaseParser::Parsers
     def special_char_to_white_space(str)
       str.gsub(SPECIAL_CHAR, WHITESPACE)
     end
+  end
 end

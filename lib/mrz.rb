@@ -26,11 +26,11 @@ module Mrz
   def self.parse(mrz_code)
     case determine_type(mrz_code)
     when :td1
-      TD1Parser.new(mrz_code).parse
+      Parsers::TD1Parser.new(mrz_code).parse
     when :td2
-      TD2Parser.new(mrz_code).parse
+      Parsers::TD2Parser.new(mrz_code).parse
     when :td3
-      TD3Parser.new(mrz_code).parse
+      Parsers::TD3Parser.new(mrz_code).parse
     end
   end
 
@@ -44,7 +44,7 @@ module Mrz
     elsif code.size == 2 && code.first.size == 44
       :td3
     else
-      raise MRZ::Parsers::InvalidFormatError, "invalid or unsupported mrz code given"
+      raise Parsers::InvalidFormatError, "invalid or unsupported mrz code given"
     end
   end
 

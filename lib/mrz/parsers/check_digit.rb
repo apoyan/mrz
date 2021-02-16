@@ -1,9 +1,9 @@
-module MRZ::Parsers
+module Mrz::Parsers
   module CheckDigit
     FACTORS = [7, 3, 1]
 
     def self.calculate(sequence)
-      check_digit = sequence.split("").each_with_index.reduce(0) do |acc,(char, i)|
+      check_digit = sequence.split("").each_with_index.reduce(0) do |acc, (char, i)|
         asciiCode = char.ord
 
         normalized_code =
