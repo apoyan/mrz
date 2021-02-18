@@ -6,6 +6,10 @@ require "mrz/parsers/base_parser"
 require "mrz/parsers/td1_parser"
 require "mrz/parsers/td2_parser"
 require "mrz/parsers/td3_parser"
+require "mrz/builders/base_builder"
+require "mrz/builders/td1_builder"
+require "mrz/builders/td2_builder"
+require "mrz/builders/td3_builder"
 
 module Mrz
 
@@ -18,6 +22,8 @@ module Mrz
     autoload :Base, 'mrz/formatters/base'
     autoload :Date, 'mrz/formatters/date'
     autoload :Name, 'mrz/formatters/name'
+    autoload :Type, 'mrz/formatters/type'
+    autoload :OptionalData, 'mrz/formatters/optional_data'
     autoload :PassportNumber, 'mrz/formatters/passport_number'
     autoload :PersonalNumber, 'mrz/formatters/personal_number'
 

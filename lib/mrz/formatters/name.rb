@@ -2,8 +2,6 @@ module Mrz
   module Formatters
     class Name < Base
 
-      PAD_OUT_TO = 39
-
       attr_accessor :first_name, :last_name
 
       def initialize(first_name, last_name, middle_name = nil)
@@ -11,10 +9,10 @@ module Mrz
         @last_name = last_name
       end
 
-      def format
+      def format(pad_out_to)
         name = remove_empty_chars(last_name + SEPARATOR * 2 + first_name).upcase
         name = Encoder.new(name).convert
-        pad_out(name, PAD_OUT_TO)
+        pad_out(name, pad_out_to)
       end
 
       private
