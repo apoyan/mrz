@@ -6,20 +6,20 @@ module Mrz::Builders
       Mrz::CheckDigit.new(str).calculate
     end
 
-    def concat_personal_number
-      concat(Mrz::Formatters::PersonalNumber.new(personal_number.to_s).format)
+    def concat_personal_code
+      concat(Mrz::Formatters::PersonalNumber.new(personal_code.to_s).format)
     end
 
-    def concat_expire_on
-      concat(Mrz::Formatters::Date.new(expire_on).format)
+    def concat_expire_date
+      concat(Mrz::Formatters::Date.new(expire_date).format)
     end
 
     def concat_gender
       concat(gender.upcase)
     end
 
-    def concat_date_of_birth
-      concat(Mrz::Formatters::Date.new(date_of_birth).format)
+    def concat_birth_date
+      concat(Mrz::Formatters::Date.new(birth_date).format)
     end
 
     def concat_nationality
@@ -30,8 +30,8 @@ module Mrz::Builders
       concat(calculate_check_digit(str))
     end
 
-    def concat_passport_number
-      concat(Mrz::Formatters::PassportNumber.new(passport_number).format)
+    def concat_document_number
+      concat(Mrz::Formatters::PassportNumber.new(document_number).format)
     end
 
     def concat_country

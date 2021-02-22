@@ -5,6 +5,7 @@ module Mrz
       TWO_DIGITS = "%02d"
 
       def format
+
         year = date.year.to_s[2..3]
         month = TWO_DIGITS % date.month
         day = TWO_DIGITS % date.day

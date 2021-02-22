@@ -4,14 +4,14 @@ module Mrz
 
       PAD_OUT_TO = 14
 
-      attr_accessor :personal_number
+      attr_accessor :personal_code
 
-      def initialize(personal_number)
-        @personal_number = personal_number
+      def initialize(personal_code)
+        @personal_code = personal_code
       end
 
       def format
-        pad_out(personal_number.upcase, PAD_OUT_TO)
+        pad_out(personal_code.upcase, PAD_OUT_TO)
       end
 
     end

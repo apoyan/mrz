@@ -1,7 +1,7 @@
 module Mrz::Builders
   class TD2Builder < BaseBuilder
-    attr_accessor :type, :country, :first_name, :last_name, :passport_number, :nationality,
-                  :date_of_birth, :gender, :expire_on, :code, :optional_data
+    attr_accessor :type, :country, :first_name, :last_name, :document_number, :nationality,
+                  :birth_date, :gender, :expire_date, :code, :optional_data
 
     def initialize(params)
       @code = params[:document_type]
@@ -9,23 +9,23 @@ module Mrz::Builders
       @first_name = params[:first_name]
       @last_name = params[:last_name]
       @country = params[:country]
-      @passport_number = params[:passport_number]
-      @date_of_birth = params[:date_of_birth]
+      @document_number = params[:document_number]
+      @birth_date = params[:birth_date]
       @gender = params[:gender]
-      @expire_on = params[:expire_on]
+      @expire_date = params[:expire_date]
       @nationality = params[:nationality]
-      @optional_data = params[:optional_data]
+      @optional_data = params[:optional]
     end
 
     def generate
       concat_type
       concat_country
       concat_name
-      concat_check_digit(concat_passport_number)
+      concat_check_digit(concat_document_number)
       concat_nationality
-      concat_check_digit(concat_date_of_birth)
+      concat_check_digit(concat_birth_date)
       concat_gender
-      concat_check_digit(concat_expire_on)
+      concat_check_digit(concat_expire_date)
       concat_optional_data
       concat_final_check_digit
 

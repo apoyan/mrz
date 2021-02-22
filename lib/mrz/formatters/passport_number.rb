@@ -4,14 +4,14 @@ module Mrz
 
       PAD_OUT_TO = 9
 
-      attr_accessor :passport_number
+      attr_accessor :document_number
 
-      def initialize(passport_number)
-        @passport_number = passport_number
+      def initialize(document_number)
+        @document_number = document_number
       end
 
       def format
-        pad_out(passport_number.upcase, PAD_OUT_TO)
+        pad_out(document_number.upcase, PAD_OUT_TO)
       end
 
     end

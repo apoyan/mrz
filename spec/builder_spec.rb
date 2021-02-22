@@ -9,12 +9,12 @@ describe Mrz::Builder do
         country:         'UTO',
         first_name:      'Anna Maria',
         last_name:       'Eriksson',
-        passport_number: 'L898902C',
+        document_number: 'L898902C',
         nationality:     'UTO',
-        date_of_birth:   Date.new(1969, 8, 6),
+        birth_date:   Date.new(1969, 8, 6),
         gender:          'f',
-        expire_on:       Date.new(1994, 6, 23),
-        personal_number: 'ZE184226B'
+        expire_date:       Date.new(1994, 6, 23),
+        personal_code: 'ZE184226B'
       }
     }
 

@@ -15,8 +15,8 @@ module Mrz::Builders
     CD_END3 = 86
     PAD_OUT_TO = 39
 
-    attr_accessor :type, :country, :first_name, :middle_name, :last_name, :passport_number, :nationality,
-                  :date_of_birth, :gender, :expire_on, :personal_number, :code
+    attr_accessor :type, :country, :first_name, :middle_name, :last_name, :document_number, :nationality,
+                  :birth_date, :gender, :expire_date, :optional_data, :code
 
     def initialize(params)
       @code = PASSPORT_CODE
@@ -25,24 +25,24 @@ module Mrz::Builders
       @first_name = params[:first_name]
       @middle_name = params[:middle_name]
       @last_name = params[:last_name]
-      @passport_number = params[:passport_number]
+      @document_number = params[:document_number]
       @nationality = params[:nationality]
-      @date_of_birth = params[:date_of_birth]
+      @birth_date = params[:birth_date]
       @gender = params[:gender]
-      @expire_on = params[:expire_on]
-      @personal_number = params[:personal_number]
+      @expire_date = params[:expire_date]
+      @optional_data = params[:optional]
     end
 
     def generate
       concat_type
       concat_country
       concat_name
-      concat_check_digit(concat_passport_number)
+      concat_check_digit(concat_document_number)
       concat_nationality
-      concat_check_digit(concat_date_of_birth)
+      concat_check_digit(concat_birth_date)
       concat_gender
-      concat_check_digit(concat_expire_on)
-      concat_check_digit(concat_personal_number)
+      concat_check_digit(concat_expire_date)
+      concat_check_digit(concat_optional_data)
       concat_final_check_digit
 
       [code[FIRST_LINE_START..FIRST_LINE_END], code[SECOND_LINE_START..SECOND_LINE_END]]
@@ -64,6 +64,10 @@ module Mrz::Builders
 
     def concat_type
       concat(Mrz::Formatters::Type.new(type, 0).format)
+    end
+
+    def concat_optional_data
+      concat(Mrz::Formatters::OptionalData.new(optional_data.to_s, 14).format)
     end
 
   end

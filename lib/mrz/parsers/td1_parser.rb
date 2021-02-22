@@ -36,20 +36,21 @@ module Mrz::Parsers
         birth_date: line_two_matches[1],
         birth_date_check_digit: line_two_matches[2],
         composite_check_digit: line_two_matches[8],
-        document_code: special_char_to_empty_space(line_one_matches[1]),
+        document_type: special_char_to_empty_space(line_one_matches[1]),
         document_number: special_char_to_empty_space(line_one_matches[3]),
         document_number_check_digit: line_one_matches[4],
-        expiration_date: line_two_matches[4],
-        expiration_date_check_digit: line_two_matches[5],
+        expire_date: line_two_matches[4],
+        expire_date_check_digit: line_two_matches[5],
         first_name: special_char_to_white_space(line_three_matches[2]).strip,
-        issuing_state: special_char_to_empty_space(line_one_matches[2]),
+        country: special_char_to_empty_space(line_one_matches[2]),
         last_name: line_three_matches[1],
         nationality: special_char_to_empty_space(line_two_matches[6]),
-        optional1: special_char_to_empty_space(line_one_matches[5]),
+        personal_code: "",
+        optional: special_char_to_empty_space(line_one_matches[5]),
         optional2: special_char_to_empty_space(line_two_matches[7]),
-        sex: special_char_to_empty_space(line_two_matches[3]),
-        type: :td1,
-      )
+        gender: special_char_to_empty_space(line_two_matches[3]),
+        type: :td1
+      ).to_h
     end
   end
 end

@@ -1,4 +1,13 @@
 require "mrz/version"
+
+require "mrz/formatters/base"
+require "mrz/formatters/passport_number"
+require "mrz/formatters/personal_number"
+require "mrz/formatters/optional_data"
+require "mrz/formatters/name"
+require "mrz/formatters/date"
+require "mrz/formatters/type"
+
 require "mrz/parsers/invalid_format_error"
 require "mrz/parsers/check_digit"
 require "mrz/parsers/result"
@@ -6,6 +15,7 @@ require "mrz/parsers/base_parser"
 require "mrz/parsers/td1_parser"
 require "mrz/parsers/td2_parser"
 require "mrz/parsers/td3_parser"
+
 require "mrz/builders/base_builder"
 require "mrz/builders/td1_builder"
 require "mrz/builders/td2_builder"
@@ -24,9 +34,18 @@ module Mrz
     autoload :Name, 'mrz/formatters/name'
     autoload :Type, 'mrz/formatters/type'
     autoload :OptionalData, 'mrz/formatters/optional_data'
-    autoload :PassportNumber, 'mrz/formatters/passport_number'
-    autoload :PersonalNumber, 'mrz/formatters/personal_number'
+    autoload :PassportNumber, 'mrz/formatters/document_number'
+    autoload :PersonalNumber, 'mrz/formatters/personal_code'
 
+  end
+
+  DOCUMENT_TYPES = %i(td1 td2 td3).freeze
+
+  def self.build(type, params)
+    raise Builders::InvalidTypeError, 'invalid or unsupported document type given' unless type.in?(DOCUMENT_TYPES)
+    builder = "Mrz::Builders::#{type.to_s.upcase}Builder".constantize
+
+    builder.new(params).generate
   end
 
   def self.parse(mrz_code)

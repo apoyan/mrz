@@ -1,7 +1,7 @@
 module Mrz::Builders
   class TD1Builder < BaseBuilder
-    attr_accessor :type, :country, :first_name, :last_name, :passport_number, :nationality,
-                  :date_of_birth, :gender, :expire_on, :code, :optional_data_1, :optional_data_2
+    attr_accessor :type, :country, :first_name, :last_name, :document_number, :nationality,
+                  :birth_date, :gender, :expire_date, :code, :optional_data, :optional_data_2
 
     def initialize(params)
       @code = params[:document_type]
@@ -9,23 +9,23 @@ module Mrz::Builders
       @first_name = params[:first_name]
       @last_name = params[:last_name]
       @country = params[:country]
-      @passport_number = params[:passport_number]
-      @date_of_birth = params[:date_of_birth]
+      @document_number = params[:document_number]
+      @birth_date = params[:birth_date]
       @gender = params[:gender]
-      @expire_on = params[:expire_on]
+      @expire_date = params[:expire_date]
       @nationality = params[:nationality]
-      @optional_data_1 = params[:optional_data_1]
-      @optional_data_2 = params[:optional_data_2]
+      @optional_data = params[:optional]
+      @optional_data_2 = params[:optional2]
     end
 
     def generate
       concat_type
       concat_country
-      concat_check_digit(concat_passport_number)
-      concat_optional_data_1
-      concat_check_digit(concat_date_of_birth)
+      concat_check_digit(concat_document_number)
+      concat_optional_data
+      concat_check_digit(concat_birth_date)
       concat_gender
-      concat_check_digit(concat_expire_on)
+      concat_check_digit(concat_expire_date)
       concat_nationality
       concat_optional_data_2
       concat_final_check_digit
@@ -52,8 +52,8 @@ module Mrz::Builders
       concat(Mrz::Formatters::Type.new(type, 1).format)
     end
 
-    def concat_optional_data_1
-      concat(Mrz::Formatters::OptionalData.new(optional_data_1.to_s, 15).format)
+    def concat_optional_data
+      concat(Mrz::Formatters::OptionalData.new(optional_data.to_s, 15).format)
     end
 
     def concat_optional_data_2
